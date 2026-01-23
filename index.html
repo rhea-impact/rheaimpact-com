@@ -3,33 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rhea Impact — What happens when robots help the people who need them most?</title>
-    <meta name="description" content="We're placing humanoid robots in homes across Dallas-Fort Worth—not for the wealthy, but for single parents, seniors, and people with limited mobility.">
+    <title>Rhea Impact — The future of care is here</title>
+    <meta name="description" content="Humanoid robots joining households across Dallas-Fort Worth—helping seniors stay independent, giving single parents their time back, restoring capability to those with limited mobility.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --black: #0A0A0A;
-            --white: #FFFFFF;
-            --gray-50: #FAFAFA;
-            --gray-100: #F4F4F5;
-            --gray-200: #E4E4E7;
-            --gray-400: #A1A1AA;
-            --gray-500: #71717A;
-            --gray-600: #52525B;
-            --gray-900: #18181B;
+            /* Thermal Glow Color System */
+            --void: #050508;
+            --deep: #0a0a0f;
+            --surface: #12121a;
+            --elevated: #1a1a24;
 
-            --accent: #B91C1C;
-            --accent-light: #FEE2E2;
+            --white: #FAFAFA;
+            --gray-100: #E4E4E7;
+            --gray-300: #A1A1AA;
+            --gray-400: #71717A;
+            --gray-500: #52525B;
 
-            --serif: 'Newsreader', Georgia, serif;
+            /* Thermal Glow Accents */
+            --glow-purple: #A855F7;
+            --glow-violet: #8B5CF6;
+            --glow-amber: #F59E0B;
+            --glow-orange: #F97316;
+            --glow-rose: #FB7185;
+            --glow-cyan: #22D3EE;
+
+            /* Gradients */
+            --gradient-thermal: linear-gradient(135deg, var(--glow-purple) 0%, var(--glow-orange) 50%, var(--glow-amber) 100%);
+            --gradient-glow: linear-gradient(135deg, var(--glow-violet) 0%, var(--glow-rose) 100%);
+
+            --display: 'Space Grotesk', -apple-system, sans-serif;
             --sans: 'Inter', -apple-system, sans-serif;
 
-            --measure: 680px;
-            --measure-wide: 1080px;
+            --measure: 720px;
+            --measure-wide: 1200px;
         }
 
         * {
@@ -44,24 +55,83 @@
         }
 
         body {
-            font-family: var(--serif);
-            background: var(--white);
-            color: var(--gray-900);
+            font-family: var(--sans);
+            background: var(--void);
+            color: var(--white);
             line-height: 1.7;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
 
         ::selection {
-            background: var(--accent-light);
-            color: var(--accent);
+            background: var(--glow-purple);
+            color: var(--white);
         }
 
         a {
             color: inherit;
+            text-decoration: none;
         }
 
         /* ============================================
-           NAVIGATION - Minimal, magazine-style
+           ANIMATED GRADIENT MESH BACKGROUND
+           ============================================ */
+        .gradient-mesh {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .gradient-mesh::before,
+        .gradient-mesh::after {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.4;
+            animation: meshFloat 20s ease-in-out infinite;
+        }
+
+        .gradient-mesh::before {
+            background: radial-gradient(circle, var(--glow-purple) 0%, transparent 60%);
+            top: -50%;
+            left: -25%;
+            animation-delay: 0s;
+        }
+
+        .gradient-mesh::after {
+            background: radial-gradient(circle, var(--glow-amber) 0%, transparent 60%);
+            bottom: -50%;
+            right: -25%;
+            animation-delay: -10s;
+        }
+
+        .gradient-orb {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.3;
+            background: radial-gradient(circle, var(--glow-rose) 0%, transparent 60%);
+            top: 20%;
+            left: 40%;
+            animation: meshFloat 15s ease-in-out infinite reverse;
+        }
+
+        @keyframes meshFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(5%, 10%) scale(1.1); }
+            50% { transform: translate(-5%, 5%) scale(0.95); }
+            75% { transform: translate(10%, -5%) scale(1.05); }
+        }
+
+        /* ============================================
+           NAVIGATION
            ============================================ */
         .nav {
             position: fixed;
@@ -73,507 +143,669 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            mix-blend-mode: difference;
+            backdrop-filter: blur(20px);
+            background: rgba(5, 5, 8, 0.5);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
         .nav-logo {
-            font-family: var(--sans);
-            font-size: 0.7rem;
+            font-family: var(--display);
+            font-size: 1rem;
             font-weight: 600;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--white);
-            text-decoration: none;
+            letter-spacing: -0.02em;
+            background: var(--gradient-thermal);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .nav-cta {
-            font-family: var(--sans);
-            font-size: 0.7rem;
+            font-family: var(--display);
+            font-size: 0.8rem;
             font-weight: 500;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
             color: var(--white);
-            text-decoration: none;
-            padding: 0.75rem 1.25rem;
-            border: 1px solid rgba(255,255,255,0.3);
-            transition: all 0.3s ease;
-        }
-
-        .nav-cta:hover {
-            background: var(--white);
-            color: var(--black);
-        }
-
-        /* ============================================
-           HERO - Full bleed, editorial opener
-           ============================================ */
-        .hero {
-            min-height: 100vh;
-            background: var(--black);
-            color: var(--white);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 4rem 2rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 100px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
         }
 
-        .hero::before {
+        .nav-cta::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(to bottom,
-                transparent 0%,
-                rgba(0,0,0,0.3) 50%,
-                rgba(0,0,0,0.8) 100%
-            );
+            background: var(--gradient-thermal);
+            opacity: 0;
+            transition: opacity 0.3s;
+            border-radius: 100px;
+        }
+
+        .nav-cta:hover {
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px -10px rgba(168, 85, 247, 0.5);
+        }
+
+        .nav-cta:hover::before {
+            opacity: 1;
+        }
+
+        .nav-cta span {
+            position: relative;
             z-index: 1;
         }
 
-        /* Placeholder for future hero image/video */
-        .hero-media {
-            position: absolute;
-            inset: 0;
-            background:
-                radial-gradient(ellipse at 30% 40%, rgba(50,50,50,1) 0%, transparent 50%),
-                radial-gradient(ellipse at 70% 60%, rgba(40,40,40,1) 0%, transparent 40%),
-                var(--black);
-            opacity: 0.8;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: var(--measure);
-        }
-
-        .hero-eyebrow {
-            font-family: var(--sans);
-            font-size: 0.7rem;
-            font-weight: 600;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 1.5rem;
+        /* ============================================
+           HERO - Cinematic opener
+           ============================================ */
+        .hero {
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            gap: 0.75rem;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+            z-index: 1;
         }
 
-        .hero-eyebrow::before {
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--display);
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--glow-amber);
+            padding: 0.5rem 1rem;
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-radius: 100px;
+            margin-bottom: 2rem;
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
+        .hero-badge::before {
             content: '';
-            width: 2rem;
-            height: 1px;
-            background: var(--accent);
+            width: 6px;
+            height: 6px;
+            background: var(--glow-amber);
+            border-radius: 50%;
+            animation: blink 2s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(245, 158, 11, 0.1); }
+            50% { box-shadow: 0 0 40px rgba(245, 158, 11, 0.2); }
         }
 
         .hero h1 {
-            font-family: var(--serif);
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            font-weight: 300;
-            line-height: 1.15;
-            letter-spacing: -0.02em;
-            margin-bottom: 2rem;
+            font-family: var(--display);
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 500;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            max-width: 900px;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 .gradient-text {
+            background: var(--gradient-thermal);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .hero-lede {
             font-size: 1.25rem;
-            font-weight: 300;
-            color: var(--gray-400);
-            max-width: 540px;
+            font-weight: 400;
+            color: var(--gray-300);
+            max-width: 600px;
             line-height: 1.6;
+            margin-bottom: 3rem;
         }
 
-        .hero-meta {
-            margin-top: 4rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.15);
-            display: flex;
-            gap: 3rem;
-            flex-wrap: wrap;
-        }
-
-        .hero-meta-item {
-            font-family: var(--sans);
-            font-size: 0.75rem;
-            color: var(--gray-500);
-        }
-
-        .hero-meta-item strong {
-            display: block;
-            color: var(--white);
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: var(--display);
+            font-size: 1rem;
             font-weight: 500;
-            margin-bottom: 0.25rem;
+            color: var(--void);
+            padding: 1rem 2rem;
+            background: var(--gradient-thermal);
+            border-radius: 100px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 60px rgba(168, 85, 247, 0.3);
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 20px 80px rgba(168, 85, 247, 0.4);
+        }
+
+        .hero-cta svg {
+            transition: transform 0.3s;
+        }
+
+        .hero-cta:hover svg {
+            transform: translateX(4px);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 4rem;
+            margin-top: 6rem;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-value {
+            font-family: var(--display);
+            font-size: 2.5rem;
+            font-weight: 600;
+            background: var(--gradient-glow);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-stat-label {
+            font-size: 0.8rem;
+            color: var(--gray-400);
+            margin-top: 0.25rem;
         }
 
         /* ============================================
-           ARTICLE BODY - Magazine typography
+           BENTO GRID - Who we serve
            ============================================ */
-        .article {
-            padding: 6rem 2rem;
+        .bento-section {
+            padding: 8rem 2rem;
+            position: relative;
+            z-index: 1;
         }
 
-        .article-content {
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-eyebrow {
+            font-family: var(--display);
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--glow-purple);
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: var(--display);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 500;
+            letter-spacing: -0.02em;
+        }
+
+        .bento-grid {
+            max-width: var(--measure-wide);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .bento-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 24px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .bento-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .bento-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(168, 85, 247, 0.3);
+            box-shadow: 0 30px 60px -20px rgba(168, 85, 247, 0.2);
+        }
+
+        .bento-card:hover::before {
+            opacity: 1;
+        }
+
+        .bento-card.featured {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+
+        .bento-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: var(--gradient-thermal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .bento-card h3 {
+            font-family: var(--display);
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+            position: relative;
+        }
+
+        .bento-card p {
+            color: var(--gray-300);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        .bento-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-top: 1.5rem;
+            position: relative;
+        }
+
+        .bento-card.featured .bento-image {
+            height: 300px;
+        }
+
+        /* ============================================
+           STORY SECTION
+           ============================================ */
+        .story-section {
+            padding: 8rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .story-content {
             max-width: var(--measure);
             margin: 0 auto;
         }
 
-        .drop-cap::first-letter {
+        .story-content p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--gray-100);
+            margin-bottom: 2rem;
+        }
+
+        .story-content p:first-of-type::first-letter {
             float: left;
-            font-size: 4.5rem;
-            line-height: 0.8;
-            font-weight: 400;
-            margin-right: 0.75rem;
-            margin-top: 0.15rem;
-            color: var(--accent);
-        }
-
-        .article p {
-            margin-bottom: 1.75rem;
-            font-size: 1.1rem;
-        }
-
-        .article h2 {
-            font-family: var(--serif);
-            font-size: 2rem;
-            font-weight: 400;
-            margin-top: 4rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.25;
-        }
-
-        .article h3 {
-            font-family: var(--sans);
-            font-size: 0.7rem;
+            font-family: var(--display);
+            font-size: 4rem;
             font-weight: 600;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--gray-500);
-            margin-top: 3rem;
-            margin-bottom: 1rem;
+            line-height: 0.8;
+            margin-right: 0.5rem;
+            margin-top: 0.1rem;
+            background: var(--gradient-thermal);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         /* ============================================
            PULL QUOTE
            ============================================ */
         .pull-quote {
-            margin: 4rem 0;
-            padding: 3rem 0;
-            border-top: 1px solid var(--gray-200);
-            border-bottom: 1px solid var(--gray-200);
+            margin: 5rem 0;
+            padding: 3rem;
+            background: rgba(168, 85, 247, 0.05);
+            border-left: 4px solid var(--glow-purple);
+            border-radius: 0 16px 16px 0;
+            position: relative;
+        }
+
+        .pull-quote::before {
+            content: '"';
+            position: absolute;
+            top: 1rem;
+            left: 1.5rem;
+            font-family: var(--display);
+            font-size: 6rem;
+            font-weight: 700;
+            background: var(--gradient-thermal);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0.3;
+            line-height: 1;
         }
 
         .pull-quote blockquote {
-            font-family: var(--serif);
-            font-size: 1.75rem;
-            font-weight: 300;
+            font-family: var(--display);
+            font-size: 1.5rem;
+            font-weight: 400;
             font-style: italic;
-            line-height: 1.4;
-            color: var(--gray-900);
+            line-height: 1.5;
+            position: relative;
         }
 
         .pull-quote cite {
             display: block;
             margin-top: 1.5rem;
-            font-family: var(--sans);
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             font-style: normal;
-            color: var(--gray-500);
+            color: var(--gray-400);
         }
 
         /* ============================================
-           FULL BLEED IMAGE/MEDIA BREAK
+           MEDIA SHOWCASE
            ============================================ */
-        .media-break {
-            margin: 5rem 0;
-            margin-left: calc(-50vw + 50%);
-            margin-right: calc(-50vw + 50%);
+        .media-showcase {
+            margin: 6rem 0;
             position: relative;
         }
 
-        .media-break-inner {
-            max-width: var(--measure-wide);
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .media-placeholder {
-            aspect-ratio: 16/9;
-            background: var(--gray-100);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 4px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .media-placeholder::after {
-            content: 'Photo: 1X Neo humanoid robot';
-            font-family: var(--sans);
-            font-size: 0.75rem;
-            color: var(--gray-400);
-            letter-spacing: 0.05em;
-        }
-
-        .media-image {
+        .media-showcase img {
             width: 100%;
             height: auto;
-            border-radius: 4px;
-            display: block;
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .media-showcase::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            background: linear-gradient(to bottom, transparent 60%, var(--void) 100%);
+            pointer-events: none;
         }
 
         .media-caption {
             margin-top: 1rem;
-            font-family: var(--sans);
-            font-size: 0.8rem;
-            color: var(--gray-500);
-            max-width: var(--measure);
-        }
-
-        /* Section inline images */
-        .section-image {
-            margin: 2rem 0 3rem;
-        }
-
-        .inline-image {
-            width: 100%;
-            height: auto;
-            border-radius: 4px;
-            display: block;
-        }
-
-        /* ============================================
-           STATS INTERLUDE
-           ============================================ */
-        .stats-break {
-            background: var(--gray-50);
-            margin: 5rem 0;
-            margin-left: calc(-50vw + 50%);
-            margin-right: calc(-50vw + 50%);
-            padding: 5rem 2rem;
-        }
-
-        .stats-inner {
-            max-width: var(--measure-wide);
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 3rem;
-        }
-
-        .stat {
+            font-size: 0.85rem;
+            color: var(--gray-400);
             text-align: center;
         }
 
-        .stat-number {
-            font-family: var(--serif);
-            font-size: 3.5rem;
-            font-weight: 300;
-            color: var(--accent);
-            line-height: 1;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-family: var(--sans);
-            font-size: 0.8rem;
-            color: var(--gray-600);
-            max-width: 180px;
-            margin: 0 auto;
-        }
-
         /* ============================================
-           THE ASK - Volunteer section
+           STATS SHOWCASE
            ============================================ */
-        .the-ask {
-            background: var(--black);
-            color: var(--white);
-            margin-left: calc(-50vw + 50%);
-            margin-right: calc(-50vw + 50%);
-            padding: 6rem 2rem;
-            margin-top: 5rem;
+        .stats-section {
+            padding: 8rem 2rem;
+            position: relative;
+            z-index: 1;
         }
 
-        .the-ask-inner {
+        .stats-grid {
             max-width: var(--measure-wide);
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 24px;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(168, 85, 247, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .stat-value {
+            font-family: var(--display);
+            font-size: 4rem;
+            font-weight: 600;
+            background: var(--gradient-thermal);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--gray-300);
+            margin-top: 1rem;
+            max-width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ============================================
+           VOLUNTEER CTA SECTION
+           ============================================ */
+        .cta-section {
+            padding: 8rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-container {
+            max-width: var(--measure-wide);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 4rem;
+            align-items: center;
         }
 
-        .the-ask-content h2 {
-            font-family: var(--serif);
+        .cta-content h2 {
+            font-family: var(--display);
             font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 300;
-            line-height: 1.2;
-            margin-bottom: 2rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
         }
 
-        .the-ask-content p {
-            color: var(--gray-400);
+        .cta-content p {
+            color: var(--gray-300);
             font-size: 1.1rem;
             margin-bottom: 1.5rem;
-            max-width: 540px;
+            line-height: 1.7;
         }
 
-        .the-ask-list {
+        .perks-list {
             list-style: none;
-            margin: 2.5rem 0;
+            margin: 2rem 0;
         }
 
-        .the-ask-list li {
+        .perks-list li {
             display: flex;
-            align-items: baseline;
+            align-items: center;
             gap: 1rem;
-            margin-bottom: 1rem;
-            font-family: var(--sans);
-            font-size: 0.95rem;
-            color: var(--gray-200);
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            font-size: 1rem;
+            color: var(--gray-100);
         }
 
-        .the-ask-list li::before {
+        .perks-list li::before {
             content: '→';
-            color: var(--accent);
+            color: var(--glow-amber);
             font-weight: 600;
+            font-size: 1.2rem;
         }
 
-        .the-ask-form {
-            background: var(--gray-900);
+        /* ============================================
+           GLASS FORM
+           ============================================ */
+        .glass-form {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 32px;
             padding: 3rem;
-            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .form-header {
-            margin-bottom: 2rem;
+        .glass-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.5), transparent);
         }
 
-        .form-header h3 {
-            font-family: var(--serif);
+        .form-title {
+            font-family: var(--display);
             font-size: 1.5rem;
-            font-weight: 400;
+            font-weight: 500;
             margin-bottom: 0.5rem;
         }
 
-        .form-header p {
-            font-family: var(--sans);
-            font-size: 0.85rem;
-            color: var(--gray-500);
+        .form-subtitle {
+            font-size: 0.9rem;
+            color: var(--gray-400);
+            margin-bottom: 2rem;
         }
 
-        .form-row {
+        .form-group {
             margin-bottom: 1.5rem;
         }
 
-        .form-row label {
+        .form-group label {
             display: block;
-            font-family: var(--sans);
+            font-family: var(--display);
             font-size: 0.75rem;
             font-weight: 500;
             letter-spacing: 0.05em;
             text-transform: uppercase;
-            color: var(--gray-400);
+            color: var(--gray-300);
             margin-bottom: 0.5rem;
         }
 
-        .form-row input,
-        .form-row select,
-        .form-row textarea {
+        .form-group input,
+        .form-group textarea {
             width: 100%;
-            padding: 1rem;
-            background: var(--black);
-            border: 1px solid var(--gray-600);
+            padding: 1rem 1.25rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
             color: var(--white);
             font-family: var(--sans);
             font-size: 1rem;
-            border-radius: 2px;
-            transition: border-color 0.2s;
+            transition: all 0.3s;
         }
 
-        .form-row input::placeholder,
-        .form-row textarea::placeholder {
-            color: var(--gray-600);
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--gray-500);
         }
 
-        .form-row input:focus,
-        .form-row select:focus,
-        .form-row textarea:focus {
+        .form-group input:focus,
+        .form-group textarea:focus {
             outline: none;
-            border-color: var(--accent);
+            border-color: var(--glow-purple);
+            box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.1);
         }
 
-        .form-row textarea {
+        .form-group textarea {
             min-height: 100px;
             resize: vertical;
         }
 
-        .form-submit {
+        .submit-btn {
             width: 100%;
-            padding: 1rem 2rem;
-            background: var(--white);
-            color: var(--black);
+            padding: 1.25rem 2rem;
+            background: var(--gradient-thermal);
             border: none;
-            font-family: var(--sans);
-            font-size: 0.85rem;
+            border-radius: 12px;
+            color: var(--void);
+            font-family: var(--display);
+            font-size: 1rem;
             font-weight: 600;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
 
-        .form-submit:hover {
-            background: var(--accent);
-            color: var(--white);
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px -10px rgba(168, 85, 247, 0.4);
         }
 
-        @media (min-width: 900px) {
-            .the-ask-inner {
-                grid-template-columns: 1fr 400px;
-                align-items: start;
-            }
+        .submit-btn:active {
+            transform: translateY(0);
         }
 
         /* ============================================
-           FOOTER - Minimal
+           FOOTER
            ============================================ */
         .footer {
-            background: var(--black);
-            color: var(--gray-500);
             padding: 4rem 2rem;
-            border-top: 1px solid var(--gray-900);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            position: relative;
+            z-index: 1;
         }
 
         .footer-inner {
             max-width: var(--measure-wide);
             margin: 0 auto;
             display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .footer-brand {
-            font-family: var(--sans);
-            font-size: 0.7rem;
-            font-weight: 600;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--white);
-        }
-
-        .footer-links {
-            display: flex;
+            justify-content: space-between;
+            align-items: center;
             flex-wrap: wrap;
             gap: 2rem;
         }
 
+        .footer-brand {
+            font-family: var(--display);
+            font-size: 1rem;
+            font-weight: 600;
+            background: var(--gradient-thermal);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
         .footer-links a {
-            font-family: var(--sans);
-            font-size: 0.85rem;
-            color: var(--gray-500);
-            text-decoration: none;
+            font-size: 0.9rem;
+            color: var(--gray-400);
             transition: color 0.2s;
         }
 
@@ -582,291 +814,290 @@
         }
 
         .footer-legal {
-            font-family: var(--sans);
-            font-size: 0.75rem;
-            color: var(--gray-600);
+            font-size: 0.8rem;
+            color: var(--gray-500);
         }
 
-        @media (min-width: 768px) {
-            .footer-inner {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-            }
-
-            .footer-links {
-                order: 0;
-            }
+        /* ============================================
+           ANIMATIONS
+           ============================================ */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                        transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stagger delays */
+        .fade-up:nth-child(1) { transition-delay: 0s; }
+        .fade-up:nth-child(2) { transition-delay: 0.1s; }
+        .fade-up:nth-child(3) { transition-delay: 0.2s; }
+        .fade-up:nth-child(4) { transition-delay: 0.3s; }
 
         /* ============================================
            RESPONSIVE
            ============================================ */
+        @media (max-width: 1024px) {
+            .bento-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .bento-card.featured {
+                grid-column: span 2;
+                grid-row: span 1;
+            }
+
+            .cta-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
         @media (max-width: 768px) {
             html {
                 font-size: 16px;
             }
 
             .hero {
-                padding: 6rem 1.5rem 3rem;
+                padding: 8rem 1.5rem 4rem;
             }
 
-            .hero h1 {
-                font-size: 2rem;
+            .hero-stats {
+                flex-direction: column;
+                gap: 2rem;
             }
 
-            .hero-meta {
-                gap: 1.5rem;
+            .bento-grid {
+                grid-template-columns: 1fr;
             }
 
-            .article {
-                padding: 4rem 1.5rem;
+            .bento-card.featured {
+                grid-column: span 1;
             }
 
-            .pull-quote blockquote {
-                font-size: 1.35rem;
+            .stats-grid {
+                grid-template-columns: 1fr;
             }
 
-            .the-ask {
-                padding: 4rem 1.5rem;
-            }
-
-            .the-ask-form {
+            .glass-form {
                 padding: 2rem;
             }
-        }
 
-        /* ============================================
-           SCROLL ANIMATIONS
-           ============================================ */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
+            .footer-inner {
+                flex-direction: column;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- Animated Background -->
+    <div class="gradient-mesh">
+        <div class="gradient-orb"></div>
+    </div>
+
+    <!-- Navigation -->
     <nav class="nav">
         <a href="#" class="nav-logo">Rhea Impact</a>
-        <a href="#volunteer" class="nav-cta">Volunteer</a>
+        <a href="#volunteer" class="nav-cta"><span>Join the Mission</span></a>
     </nav>
 
-    <article>
-        <!-- HERO -->
-        <header class="hero">
-            <div class="hero-media"></div>
-            <div class="hero-content">
-                <div class="hero-eyebrow">Dallas-Fort Worth, 2026</div>
-                <h1>What happens when robots start helping the people who need them most?</h1>
-                <p class="hero-lede">A small organization in Texas is about to find out—by placing humanoid robots in the homes of single parents, seniors, and people with limited mobility.</p>
-                <div class="hero-meta">
-                    <div class="hero-meta-item">
-                        <strong>Status</strong>
-                        Now recruiting volunteers
-                    </div>
-                    <div class="hero-meta-item">
-                        <strong>Timeline</strong>
-                        First robots: 3-6 months
-                    </div>
-                    <div class="hero-meta-item">
-                        <strong>Location</strong>
-                        Dallas-Fort Worth metro
-                    </div>
-                </div>
+    <!-- Hero -->
+    <header class="hero">
+        <div class="hero-badge">
+            <span>Now Recruiting • Dallas-Fort Worth</span>
+        </div>
+        <h1>
+            <span class="gradient-text">Neo joins your household.</span><br>
+            You get your life back.
+        </h1>
+        <p class="hero-lede">
+            Humanoid robots are no longer science fiction. We're placing them in homes where they're needed most—helping seniors stay independent, giving single parents their time back, restoring capability to those with limited mobility.
+        </p>
+        <a href="#volunteer" class="hero-cta">
+            Become a Volunteer
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+        </a>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <div class="hero-stat-value">53M</div>
+                <div class="hero-stat-label">Unpaid caregivers in America</div>
             </div>
-        </header>
-
-        <!-- ARTICLE BODY -->
-        <div class="article">
-            <div class="article-content">
-
-                <p class="drop-cap fade-in">The robots are coming. Not in the way science fiction warned us—not as conquerors or replacements, but as helpers. Humanoid machines that can fold laundry, wash dishes, tidy a living room. The kind of mundane, physical tasks that most of us take for granted.</p>
-
-                <p class="fade-in">For a 78-year-old widow with arthritis, these tasks aren't mundane. They're barriers. For a single mother working two jobs, they're hours she doesn't have. For a veteran adjusting to life with limited mobility, they're daily reminders of what's been lost.</p>
-
-                <div class="section-image fade-in">
-                    <img src="images/seniors-kitchen.jpg" alt="Elderly hands preparing food at a kitchen counter" class="inline-image">
-                </div>
-
-                <p class="fade-in">This is the gap Rhea Impact was created to close.</p>
-
-                <div class="pull-quote fade-in">
-                    <blockquote>"The most advanced robots in the world are being built for people who need them least. We want to change who gets access."</blockquote>
-                    <cite>— Daniel Shanklin, Founder</cite>
-                </div>
-
-                <h2 class="fade-in">The premise is simple</h2>
-
-                <p class="fade-in">We acquire humanoid robots—starting with the 1X Neo, a general-purpose machine capable of household tasks—and place them in homes across Dallas-Fort Worth. Not as products to sell. As resources to share.</p>
-
-                <p class="fade-in">The model works like this: robots are donated into the organization, then deployed to recipients who apply and qualify. A volunteer network handles the logistics—transporting robots between homes, providing setup and training, troubleshooting issues. Between deployments, volunteers can use the robots themselves. Everyone benefits.</p>
-
+            <div class="hero-stat">
+                <div class="hero-stat-value">70%</div>
+                <div class="hero-stat-label">Seniors will need long-term care</div>
             </div>
-
-            <div class="media-break fade-in">
-                <div class="media-break-inner">
-                    <img src="images/robot-living-room.jpg" alt="1X Neo humanoid robot organizing items in a cozy living room" class="media-image">
-                    <p class="media-caption">The 1X Neo is a humanoid robot designed for household tasks—cleaning, organizing, and daily assistance. Standing roughly human-height, it can navigate homes, manipulate objects, and learn routines.</p>
-                </div>
-            </div>
-
-            <div class="article-content">
-
-                <h2 class="fade-in">Who this is for</h2>
-
-                <p class="fade-in">We're starting with three groups:</p>
-
-                <h3 class="fade-in">Seniors aging in place</h3>
-                <p class="fade-in">Adults who want to stay in their homes but struggle with physical maintenance. A robot that handles cleaning and organization can extend independence by years—and delay or prevent the move to assisted living that many dread.</p>
-
-                <div class="section-image fade-in">
-                    <img src="images/robot-seniors.jpg" alt="Humanoid robot folding towels while a senior woman watches from her couch" class="inline-image">
-                </div>
-
-                <h3 class="fade-in">Single parents</h3>
-                <p class="fade-in">Time is the scarcest resource. A parent working multiple jobs doesn't need another app or service—they need physical help with the house so they can spend their limited hours with their kids, not their dishes.</p>
-
-                <div class="section-image fade-in">
-                    <img src="images/robot-single-parent.jpg" alt="Mother playing with her young child on the floor while a humanoid robot vacuums in the background" class="inline-image">
-                </div>
-
-                <h3 class="fade-in">People with mobility limitations</h3>
-                <p class="fade-in">Veterans, accident survivors, people with chronic conditions. Those for whom the physical world has become harder to navigate. A robot that handles household tasks isn't a luxury—it's a restoration of capability.</p>
-
-                <div class="section-image fade-in">
-                    <img src="images/robot-mobility.jpg" alt="Veteran in a wheelchair at home with a humanoid robot assistant nearby" class="inline-image">
-                </div>
-
-            </div>
-
-            <div class="stats-break fade-in">
-                <div class="stats-inner">
-                    <div class="stat">
-                        <div class="stat-number">53M</div>
-                        <div class="stat-label">Americans provide unpaid care to family members</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">$600B</div>
-                        <div class="stat-label">Value of unpaid caregiving annually in the U.S.</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">70%</div>
-                        <div class="stat-label">Of seniors will need long-term care at some point</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="article-content">
-
-                <h2 class="fade-in">Why Dallas-Fort Worth</h2>
-
-                <p class="fade-in">We're starting where we are. Rhea Impact is based in Fort Worth, and building a volunteer network requires local relationships. DFW is also one of the fastest-growing metros in the country, with a mix of demographics that represents the broader challenge: aging suburbs, working-class neighborhoods, a veteran population, and increasing economic stratification.</p>
-
-                <p class="fade-in">If the model works here, it can work anywhere.</p>
-
-                <h2 class="fade-in">The honest uncertainties</h2>
-
-                <p class="fade-in">This is an experiment. We don't know if recipients will adapt quickly or need extensive support. We don't know if the volunteer model scales. We don't know how robots will perform in diverse home environments over extended periods.</p>
-
-                <p class="fade-in">What we do know: the only way to answer these questions is to start. To place the first robot, learn from what happens, and iterate.</p>
-
-                <div class="pull-quote fade-in">
-                    <blockquote>"The best time to figure out how to democratize this technology is before it's everywhere—not after."</blockquote>
-                </div>
-
+            <div class="hero-stat">
+                <div class="hero-stat-value">$600B</div>
+                <div class="hero-stat-label">Annual value of unpaid care</div>
             </div>
         </div>
+    </header>
 
-        <!-- THE ASK -->
-        <section class="the-ask" id="volunteer">
-            <div class="the-ask-inner">
-                <div class="the-ask-content">
-                    <h2>We're looking for volunteers in DFW</h2>
-                    <p>You don't need robotics experience. You need curiosity, reliability, and a desire to be part of something genuinely new.</p>
+    <!-- Who We Serve - Bento Grid -->
+    <section class="bento-section">
+        <div class="section-header fade-up">
+            <div class="section-eyebrow">Who Neo Helps</div>
+            <h2 class="section-title">Three groups. One mission.</h2>
+        </div>
 
-                    <ul class="the-ask-list">
-                        <li>Hands-on training with humanoid robots</li>
-                        <li>Use robots in your own home between deployments</li>
-                        <li>Be part of a founding team shaping how this works</li>
-                        <li>Help people in your community live more independently</li>
-                    </ul>
+        <div class="bento-grid">
+            <div class="bento-card featured fade-up">
+                <div class="bento-icon">👵</div>
+                <h3>Seniors aging in place</h3>
+                <p>Margaret is 78. She wants to stay in her home, not move to assisted living. Neo handles the cleaning, organizing, and daily tasks that have become barriers. She keeps her independence. Her family keeps their peace of mind.</p>
+                <img src="images/robot-seniors.jpg" alt="Robot assisting senior" class="bento-image">
+            </div>
 
-                    <p>First deployments expected in 3-6 months. We're building the volunteer cohort now.</p>
+            <div class="bento-card fade-up">
+                <div class="bento-icon">👨‍👧</div>
+                <h3>Single parents</h3>
+                <p>David works two jobs. By the time he gets home, there's no energy left for his daughter—just dishes and laundry. Neo handles the house. David gets his evenings back.</p>
+                <img src="images/robot-single-parent.jpg" alt="Robot helping family" class="bento-image">
+            </div>
+
+            <div class="bento-card fade-up">
+                <div class="bento-icon">🦽</div>
+                <h3>People with mobility limitations</h3>
+                <p>James served three tours. A roadside bomb changed everything. Neo doesn't give him back what he lost—but it restores capability. Independence. Dignity.</p>
+                <img src="images/robot-mobility.jpg" alt="Robot with veteran" class="bento-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section class="story-section">
+        <div class="story-content">
+            <p class="fade-up">The most advanced robots in the world are being built for people who need them least. Tech billionaires buying $200,000 humanoids as status symbols while a widow in Fort Worth struggles to wash her own dishes.</p>
+
+            <p class="fade-up">We're changing that equation. Rhea Impact acquires humanoid robots and deploys them to households across Dallas-Fort Worth—not as products to sell, but as shared resources. A volunteer network transports them, sets them up, troubleshoots issues. Between deployments, volunteers get to use the robots themselves.</p>
+
+            <div class="pull-quote fade-up">
+                <blockquote>"The best time to figure out how to democratize this technology is before it's everywhere—not after."</blockquote>
+                <cite>— Daniel Shanklin, Founder</cite>
+            </div>
+
+            <div class="media-showcase fade-up">
+                <img src="images/robot-living-room.jpg" alt="Neo humanoid robot in a home environment">
+                <p class="media-caption">The 1X Neo navigates homes, manipulates objects, and learns household routines—bringing science fiction into everyday life.</p>
+            </div>
+
+            <p class="fade-up">This is an experiment. We don't know exactly how it will unfold. What we do know: the only way to answer the important questions is to start. To place the first robot, learn from what happens, and iterate.</p>
+
+            <p class="fade-up">If the model works in DFW, it can work anywhere.</p>
+        </div>
+    </section>
+
+    <!-- Volunteer CTA -->
+    <section class="cta-section" id="volunteer">
+        <div class="cta-container">
+            <div class="cta-content fade-up">
+                <h2>Join the founding cohort</h2>
+                <p>You don't need robotics experience. You need curiosity, reliability, and a desire to be part of something genuinely new.</p>
+
+                <ul class="perks-list">
+                    <li>Hands-on training with humanoid robots</li>
+                    <li>Use Neo in your own home between deployments</li>
+                    <li>Shape how this technology reaches people who need it</li>
+                    <li>Be part of the founding team, not just a volunteer list</li>
+                </ul>
+
+                <p>First deployments expected in 3-6 months. We're building the team now.</p>
+            </div>
+
+            <form class="glass-form fade-up" id="signup-form">
+                <h3 class="form-title">Express Interest</h3>
+                <p class="form-subtitle">We'll be in touch when we're ready to onboard.</p>
+
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Your name" required>
                 </div>
 
-                <form class="the-ask-form" id="signup-form">
-                    <div class="form-header">
-                        <h3>Express interest</h3>
-                        <p>We'll be in touch when we're ready to onboard.</p>
-                    </div>
-                    <div class="form-row">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" placeholder="Your name" required>
-                    </div>
-                    <div class="form-row">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="you@example.com" required>
-                    </div>
-                    <div class="form-row">
-                        <label for="location">Where in DFW</label>
-                        <input type="text" id="location" name="location" placeholder="City or neighborhood">
-                    </div>
-                    <div class="form-row">
-                        <label for="why">Why are you interested?</label>
-                        <textarea id="why" name="why" placeholder="A sentence or two is fine"></textarea>
-                    </div>
-                    <button type="submit" class="form-submit">Submit</button>
-                </form>
-            </div>
-        </section>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                </div>
 
-    </article>
+                <div class="form-group">
+                    <label for="location">Where in DFW</label>
+                    <input type="text" id="location" name="location" placeholder="City or neighborhood">
+                </div>
 
+                <div class="form-group">
+                    <label for="why">Why you're interested</label>
+                    <textarea id="why" name="why" placeholder="A sentence or two is fine"></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer class="footer">
         <div class="footer-inner">
             <span class="footer-brand">Rhea Impact</span>
             <div class="footer-links">
                 <a href="mailto:hello@rheaimpact.com">Contact</a>
                 <a href="#">Donate</a>
-                <a href="#">Refer a recipient</a>
+                <a href="#">Refer a Recipient</a>
             </div>
-            <span class="footer-legal">Fort Worth, TX</span>
+            <span class="footer-legal">Fort Worth, TX • 2026</span>
         </div>
     </footer>
 
     <script>
-        // Form handling
+        // Form handling with visual feedback
         document.getElementById('signup-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            const btn = this.querySelector('.form-submit');
-            btn.textContent = 'Thank you';
-            btn.style.background = '#059669';
-            btn.style.color = '#fff';
+            const btn = this.querySelector('.submit-btn');
+            const originalText = btn.textContent;
+
+            btn.textContent = 'Sending...';
+            btn.style.opacity = '0.7';
+
             setTimeout(() => {
-                btn.textContent = 'Submit';
-                btn.style.background = '';
-                btn.style.color = '';
-                this.reset();
-            }, 3000);
+                btn.textContent = '✓ We\'ll be in touch';
+                btn.style.background = 'linear-gradient(135deg, #10B981 0%, #059669 100%)';
+                btn.style.opacity = '1';
+
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                    this.reset();
+                }, 3000);
+            }, 800);
         });
 
-        // Scroll reveal
+        // Intersection Observer for animations
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
                 }
             });
-        }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -80px 0px'
+        });
 
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        // Parallax effect on gradient mesh
+        document.addEventListener('mousemove', (e) => {
+            const mesh = document.querySelector('.gradient-mesh');
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+            mesh.style.transform = `translate(${x}px, ${y}px)`;
+        });
     </script>
 
 </body>
