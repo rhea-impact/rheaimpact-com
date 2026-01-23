@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rhea Impact — What happens when robots help the people who need them most?</title>
+    <meta name="description" content="We're placing humanoid robots in homes across Dallas-Fort Worth—not for the wealthy, but for single parents, seniors, and people with limited mobility.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --black: #0A0A0A;
+            --white: #FFFFFF;
+            --gray-50: #FAFAFA;
+            --gray-100: #F4F4F5;
+            --gray-200: #E4E4E7;
+            --gray-400: #A1A1AA;
+            --gray-500: #71717A;
+            --gray-600: #52525B;
+            --gray-900: #18181B;
+
+            --accent: #B91C1C;
+            --accent-light: #FEE2E2;
+
+            --serif: 'Newsreader', Georgia, serif;
+            --sans: 'Inter', -apple-system, sans-serif;
+
+            --measure: 680px;
+            --measure-wide: 1080px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 18px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--serif);
+            background: var(--white);
+            color: var(--gray-900);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::selection {
+            background: var(--accent-light);
+            color: var(--accent);
+        }
+
+        a {
+            color: inherit;
+        }
+
+        /* ============================================
+           NAVIGATION - Minimal, magazine-style
+           ============================================ */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            mix-blend-mode: difference;
+        }
+
+        .nav-logo {
+            font-family: var(--sans);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .nav-cta {
+            font-family: var(--sans);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--white);
+            text-decoration: none;
+            padding: 0.75rem 1.25rem;
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .nav-cta:hover {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        /* ============================================
+           HERO - Full bleed, editorial opener
+           ============================================ */
+        .hero {
+            min-height: 100vh;
+            background: var(--black);
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom,
+                transparent 0%,
+                rgba(0,0,0,0.3) 50%,
+                rgba(0,0,0,0.8) 100%
+            );
+            z-index: 1;
+        }
+
+        /* Placeholder for future hero image/video */
+        .hero-media {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 30% 40%, rgba(50,50,50,1) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 60%, rgba(40,40,40,1) 0%, transparent 40%),
+                var(--black);
+            opacity: 0.8;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: var(--measure);
+        }
+
+        .hero-eyebrow {
+            font-family: var(--sans);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .hero-eyebrow::before {
+            content: '';
+            width: 2rem;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        .hero h1 {
+            font-family: var(--serif);
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 300;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 2rem;
+        }
+
+        .hero-lede {
+            font-size: 1.25rem;
+            font-weight: 300;
+            color: var(--gray-400);
+            max-width: 540px;
+            line-height: 1.6;
+        }
+
+        .hero-meta {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.15);
+            display: flex;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-meta-item {
+            font-family: var(--sans);
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .hero-meta-item strong {
+            display: block;
+            color: var(--white);
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        /* ============================================
+           ARTICLE BODY - Magazine typography
+           ============================================ */
+        .article {
+            padding: 6rem 2rem;
+        }
+
+        .article-content {
+            max-width: var(--measure);
+            margin: 0 auto;
+        }
+
+        .drop-cap::first-letter {
+            float: left;
+            font-size: 4.5rem;
+            line-height: 0.8;
+            font-weight: 400;
+            margin-right: 0.75rem;
+            margin-top: 0.15rem;
+            color: var(--accent);
+        }
+
+        .article p {
+            margin-bottom: 1.75rem;
+            font-size: 1.1rem;
+        }
+
+        .article h2 {
+            font-family: var(--serif);
+            font-size: 2rem;
+            font-weight: 400;
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.25;
+        }
+
+        .article h3 {
+            font-family: var(--sans);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gray-500);
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* ============================================
+           PULL QUOTE
+           ============================================ */
+        .pull-quote {
+            margin: 4rem 0;
+            padding: 3rem 0;
+            border-top: 1px solid var(--gray-200);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .pull-quote blockquote {
+            font-family: var(--serif);
+            font-size: 1.75rem;
+            font-weight: 300;
+            font-style: italic;
+            line-height: 1.4;
+            color: var(--gray-900);
+        }
+
+        .pull-quote cite {
+            display: block;
+            margin-top: 1.5rem;
+            font-family: var(--sans);
+            font-size: 0.8rem;
+            font-style: normal;
+            color: var(--gray-500);
+        }
+
+        /* ============================================
+           FULL BLEED IMAGE/MEDIA BREAK
+           ============================================ */
+        .media-break {
+            margin: 5rem 0;
+            margin-left: calc(-50vw + 50%);
+            margin-right: calc(-50vw + 50%);
+            position: relative;
+        }
+
+        .media-break-inner {
+            max-width: var(--measure-wide);
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .media-placeholder {
+            aspect-ratio: 16/9;
+            background: var(--gray-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .media-placeholder::after {
+            content: 'Photo: 1X Neo humanoid robot';
+            font-family: var(--sans);
+            font-size: 0.75rem;
+            color: var(--gray-400);
+            letter-spacing: 0.05em;
+        }
+
+        .media-caption {
+            margin-top: 1rem;
+            font-family: var(--sans);
+            font-size: 0.8rem;
+            color: var(--gray-500);
+            max-width: var(--measure);
+        }
+
+        /* ============================================
+           STATS INTERLUDE
+           ============================================ */
+        .stats-break {
+            background: var(--gray-50);
+            margin: 5rem 0;
+            margin-left: calc(-50vw + 50%);
+            margin-right: calc(-50vw + 50%);
+            padding: 5rem 2rem;
+        }
+
+        .stats-inner {
+            max-width: var(--measure-wide);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: var(--serif);
+            font-size: 3.5rem;
+            font-weight: 300;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-family: var(--sans);
+            font-size: 0.8rem;
+            color: var(--gray-600);
+            max-width: 180px;
+            margin: 0 auto;
+        }
+
+        /* ============================================
+           THE ASK - Volunteer section
+           ============================================ */
+        .the-ask {
+            background: var(--black);
+            color: var(--white);
+            margin-left: calc(-50vw + 50%);
+            margin-right: calc(-50vw + 50%);
+            padding: 6rem 2rem;
+            margin-top: 5rem;
+        }
+
+        .the-ask-inner {
+            max-width: var(--measure-wide);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4rem;
+        }
+
+        .the-ask-content h2 {
+            font-family: var(--serif);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 2rem;
+        }
+
+        .the-ask-content p {
+            color: var(--gray-400);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            max-width: 540px;
+        }
+
+        .the-ask-list {
+            list-style: none;
+            margin: 2.5rem 0;
+        }
+
+        .the-ask-list li {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-family: var(--sans);
+            font-size: 0.95rem;
+            color: var(--gray-200);
+        }
+
+        .the-ask-list li::before {
+            content: '→';
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .the-ask-form {
+            background: var(--gray-900);
+            padding: 3rem;
+            border-radius: 4px;
+        }
+
+        .form-header {
+            margin-bottom: 2rem;
+        }
+
+        .form-header h3 {
+            font-family: var(--serif);
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-header p {
+            font-family: var(--sans);
+            font-size: 0.85rem;
+            color: var(--gray-500);
+        }
+
+        .form-row {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row label {
+            display: block;
+            font-family: var(--sans);
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--gray-400);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-row input,
+        .form-row select,
+        .form-row textarea {
+            width: 100%;
+            padding: 1rem;
+            background: var(--black);
+            border: 1px solid var(--gray-600);
+            color: var(--white);
+            font-family: var(--sans);
+            font-size: 1rem;
+            border-radius: 2px;
+            transition: border-color 0.2s;
+        }
+
+        .form-row input::placeholder,
+        .form-row textarea::placeholder {
+            color: var(--gray-600);
+        }
+
+        .form-row input:focus,
+        .form-row select:focus,
+        .form-row textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .form-row textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: var(--white);
+            color: var(--black);
+            border: none;
+            font-family: var(--sans);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .form-submit:hover {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        @media (min-width: 900px) {
+            .the-ask-inner {
+                grid-template-columns: 1fr 400px;
+                align-items: start;
+            }
+        }
+
+        /* ============================================
+           FOOTER - Minimal
+           ============================================ */
+        .footer {
+            background: var(--black);
+            color: var(--gray-500);
+            padding: 4rem 2rem;
+            border-top: 1px solid var(--gray-900);
+        }
+
+        .footer-inner {
+            max-width: var(--measure-wide);
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .footer-brand {
+            font-family: var(--sans);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--white);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            font-family: var(--sans);
+            font-size: 0.85rem;
+            color: var(--gray-500);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .footer-legal {
+            font-family: var(--sans);
+            font-size: 0.75rem;
+            color: var(--gray-600);
+        }
+
+        @media (min-width: 768px) {
+            .footer-inner {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .footer-links {
+                order: 0;
+            }
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 768px) {
+            html {
+                font-size: 16px;
+            }
+
+            .hero {
+                padding: 6rem 1.5rem 3rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-meta {
+                gap: 1.5rem;
+            }
+
+            .article {
+                padding: 4rem 1.5rem;
+            }
+
+            .pull-quote blockquote {
+                font-size: 1.35rem;
+            }
+
+            .the-ask {
+                padding: 4rem 1.5rem;
+            }
+
+            .the-ask-form {
+                padding: 2rem;
+            }
+        }
+
+        /* ============================================
+           SCROLL ANIMATIONS
+           ============================================ */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="nav">
+        <a href="#" class="nav-logo">Rhea Impact</a>
+        <a href="#volunteer" class="nav-cta">Volunteer</a>
+    </nav>
+
+    <article>
+        <!-- HERO -->
+        <header class="hero">
+            <div class="hero-media"></div>
+            <div class="hero-content">
+                <div class="hero-eyebrow">Dallas-Fort Worth, 2026</div>
+                <h1>What happens when robots start helping the people who need them most?</h1>
+                <p class="hero-lede">A small organization in Texas is about to find out—by placing humanoid robots in the homes of single parents, seniors, and people with limited mobility.</p>
+                <div class="hero-meta">
+                    <div class="hero-meta-item">
+                        <strong>Status</strong>
+                        Now recruiting volunteers
+                    </div>
+                    <div class="hero-meta-item">
+                        <strong>Timeline</strong>
+                        First robots: 3-6 months
+                    </div>
+                    <div class="hero-meta-item">
+                        <strong>Location</strong>
+                        Dallas-Fort Worth metro
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- ARTICLE BODY -->
+        <div class="article">
+            <div class="article-content">
+
+                <p class="drop-cap fade-in">The robots are coming. Not in the way science fiction warned us—not as conquerors or replacements, but as helpers. Humanoid machines that can fold laundry, wash dishes, tidy a living room. The kind of mundane, physical tasks that most of us take for granted.</p>
+
+                <p class="fade-in">For a 78-year-old widow with arthritis, these tasks aren't mundane. They're barriers. For a single mother working two jobs, they're hours she doesn't have. For a veteran adjusting to life with limited mobility, they're daily reminders of what's been lost.</p>
+
+                <p class="fade-in">This is the gap Rhea Impact was created to close.</p>
+
+                <div class="pull-quote fade-in">
+                    <blockquote>"The most advanced robots in the world are being built for people who need them least. We want to change who gets access."</blockquote>
+                    <cite>— Daniel Shanklin, Founder</cite>
+                </div>
+
+                <h2 class="fade-in">The premise is simple</h2>
+
+                <p class="fade-in">We acquire humanoid robots—starting with the 1X Neo, a general-purpose machine capable of household tasks—and place them in homes across Dallas-Fort Worth. Not as products to sell. As resources to share.</p>
+
+                <p class="fade-in">The model works like this: robots are donated into the organization, then deployed to recipients who apply and qualify. A volunteer network handles the logistics—transporting robots between homes, providing setup and training, troubleshooting issues. Between deployments, volunteers can use the robots themselves. Everyone benefits.</p>
+
+            </div>
+
+            <div class="media-break fade-in">
+                <div class="media-break-inner">
+                    <div class="media-placeholder"></div>
+                    <p class="media-caption">The 1X Neo is a humanoid robot designed for household tasks—cleaning, organizing, and daily assistance. Standing roughly human-height, it can navigate homes, manipulate objects, and learn routines.</p>
+                </div>
+            </div>
+
+            <div class="article-content">
+
+                <h2 class="fade-in">Who this is for</h2>
+
+                <p class="fade-in">We're starting with three groups:</p>
+
+                <h3 class="fade-in">Seniors aging in place</h3>
+                <p class="fade-in">Adults who want to stay in their homes but struggle with physical maintenance. A robot that handles cleaning and organization can extend independence by years—and delay or prevent the move to assisted living that many dread.</p>
+
+                <h3 class="fade-in">Single parents</h3>
+                <p class="fade-in">Time is the scarcest resource. A parent working multiple jobs doesn't need another app or service—they need physical help with the house so they can spend their limited hours with their kids, not their dishes.</p>
+
+                <h3 class="fade-in">People with mobility limitations</h3>
+                <p class="fade-in">Veterans, accident survivors, people with chronic conditions. Those for whom the physical world has become harder to navigate. A robot that handles household tasks isn't a luxury—it's a restoration of capability.</p>
+
+            </div>
+
+            <div class="stats-break fade-in">
+                <div class="stats-inner">
+                    <div class="stat">
+                        <div class="stat-number">53M</div>
+                        <div class="stat-label">Americans provide unpaid care to family members</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">$600B</div>
+                        <div class="stat-label">Value of unpaid caregiving annually in the U.S.</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">70%</div>
+                        <div class="stat-label">Of seniors will need long-term care at some point</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-content">
+
+                <h2 class="fade-in">Why Dallas-Fort Worth</h2>
+
+                <p class="fade-in">We're starting where we are. Rhea Impact is based in Fort Worth, and building a volunteer network requires local relationships. DFW is also one of the fastest-growing metros in the country, with a mix of demographics that represents the broader challenge: aging suburbs, working-class neighborhoods, a veteran population, and increasing economic stratification.</p>
+
+                <p class="fade-in">If the model works here, it can work anywhere.</p>
+
+                <h2 class="fade-in">The honest uncertainties</h2>
+
+                <p class="fade-in">This is an experiment. We don't know if recipients will adapt quickly or need extensive support. We don't know if the volunteer model scales. We don't know how robots will perform in diverse home environments over extended periods.</p>
+
+                <p class="fade-in">What we do know: the only way to answer these questions is to start. To place the first robot, learn from what happens, and iterate.</p>
+
+                <div class="pull-quote fade-in">
+                    <blockquote>"The best time to figure out how to democratize this technology is before it's everywhere—not after."</blockquote>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- THE ASK -->
+        <section class="the-ask" id="volunteer">
+            <div class="the-ask-inner">
+                <div class="the-ask-content">
+                    <h2>We're looking for volunteers in DFW</h2>
+                    <p>You don't need robotics experience. You need curiosity, reliability, and a desire to be part of something genuinely new.</p>
+
+                    <ul class="the-ask-list">
+                        <li>Hands-on training with humanoid robots</li>
+                        <li>Use robots in your own home between deployments</li>
+                        <li>Be part of a founding team shaping how this works</li>
+                        <li>Help people in your community live more independently</li>
+                    </ul>
+
+                    <p>First deployments expected in 3-6 months. We're building the volunteer cohort now.</p>
+                </div>
+
+                <form class="the-ask-form" id="signup-form">
+                    <div class="form-header">
+                        <h3>Express interest</h3>
+                        <p>We'll be in touch when we're ready to onboard.</p>
+                    </div>
+                    <div class="form-row">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" placeholder="Your name" required>
+                    </div>
+                    <div class="form-row">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                    </div>
+                    <div class="form-row">
+                        <label for="location">Where in DFW</label>
+                        <input type="text" id="location" name="location" placeholder="City or neighborhood">
+                    </div>
+                    <div class="form-row">
+                        <label for="why">Why are you interested?</label>
+                        <textarea id="why" name="why" placeholder="A sentence or two is fine"></textarea>
+                    </div>
+                    <button type="submit" class="form-submit">Submit</button>
+                </form>
+            </div>
+        </section>
+
+    </article>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <span class="footer-brand">Rhea Impact</span>
+            <div class="footer-links">
+                <a href="mailto:hello@rheaimpact.com">Contact</a>
+                <a href="#">Donate</a>
+                <a href="#">Refer a recipient</a>
+            </div>
+            <span class="footer-legal">Fort Worth, TX</span>
+        </div>
+    </footer>
+
+    <script>
+        // Form handling
+        document.getElementById('signup-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('.form-submit');
+            btn.textContent = 'Thank you';
+            btn.style.background = '#059669';
+            btn.style.color = '#fff';
+            setTimeout(() => {
+                btn.textContent = 'Submit';
+                btn.style.background = '';
+                btn.style.color = '';
+                this.reset();
+            }, 3000);
+        });
+
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+
+</body>
+</html>
