@@ -54,7 +54,11 @@ def get_db():
     """Database connection context manager."""
     if not DATABASE_URL:
         raise HTTPException(status_code=500, detail="Database not configured")
-    conn = psycopg.connect(DATABASE_URL)
+    try:
+        conn = psycopg.connect(DATABASE_URL)
+    except Exception as e:
+        print(f"Database connection error: {e}")
+        raise HTTPException(status_code=500, detail=f"Database connection failed: {e}")
     try:
         yield conn
     finally:
