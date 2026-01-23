@@ -817,7 +817,7 @@
                     <p>First deployments expected in 3-6 months. We're building the volunteer cohort now.</p>
                 </div>
 
-                <form class="the-ask-form" id="signup-form" action="https://formspree.io/f/xwpkgqjp" method="POST">
+                <form class="the-ask-form" id="signup-form">
                     <div class="form-header">
                         <h3>Express interest</h3>
                         <p>We'll be in touch when we're ready to onboard.</p>
@@ -838,9 +838,10 @@
                         <label for="why">Why are you interested?</label>
                         <textarea id="why" name="why" placeholder="A sentence or two is fine"></textarea>
                     </div>
-                    <input type="hidden" name="_subject" value="New Rhea Impact Volunteer Interest">
+                    <!-- Honeypot field - hidden from humans, bots fill it -->
+                    <div style="position:absolute;left:-9999px;"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
                     <button type="submit" class="form-submit">Submit</button>
-                    <p class="form-success" style="display:none; margin-top:1rem; color:#059669; font-family:var(--sans); font-size:0.9rem;">Thank you! We'll be in touch.</p>
+                    <p class="form-success" style="display:none; margin-top:1rem; color:#059669; font-family:var(--sans); font-size:0.9rem;"></p>
                     <p class="form-error" style="display:none; margin-top:1rem; color:#dc2626; font-family:var(--sans); font-size:0.9rem;">Something went wrong. Please try again.</p>
                 </form>
             </div>
@@ -861,7 +862,7 @@
     </footer>
 
     <script>
-        // Form handling with Formspree
+        // Form handling - self-hosted API
         const form = document.getElementById('signup-form');
         const btn = form.querySelector('.form-submit');
         const successMsg = form.querySelector('.form-success');
@@ -874,16 +875,26 @@
             successMsg.style.display = 'none';
             errorMsg.style.display = 'none';
 
+            const data = {
+                name: form.name.value,
+                email: form.email.value,
+                location: form.location.value || null,
+                why: form.why.value || null
+            };
+
             try {
-                const response = await fetch(form.action, {
+                const response = await fetch('/signup', {
                     method: 'POST',
-                    body: new FormData(form),
-                    headers: { 'Accept': 'application/json' }
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
                 });
+
+                const result = await response.json();
 
                 if (response.ok) {
                     btn.textContent = 'Sent!';
                     btn.style.background = '#059669';
+                    successMsg.textContent = result.message;
                     successMsg.style.display = 'block';
                     form.reset();
                     setTimeout(() => {
@@ -892,7 +903,7 @@
                         btn.disabled = false;
                     }, 3000);
                 } else {
-                    throw new Error('Form submission failed');
+                    throw new Error(result.detail || 'Signup failed');
                 }
             } catch (err) {
                 btn.textContent = 'Submit';
