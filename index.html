@@ -6,8 +6,24 @@
     <title>Rhea Impact — What happens when robots help the people who need them most?</title>
     <meta name="description" content="We're placing humanoid robots in homes across Dallas-Fort Worth—not for the wealthy, but for single parents, seniors, and people with limited mobility.">
 
+    <!-- Open Graph -->
+    <meta property="og:title" content="Rhea Impact — Humanoid Robots for Those Who Need Them Most">
+    <meta property="og:description" content="We're placing humanoid robots in homes across Dallas-Fort Worth—not for the wealthy, but for single parents, seniors, and people with limited mobility.">
+    <meta property="og:image" content="https://rheaimpact.com/images/robot-living-room.jpg">
+    <meta property="og:url" content="https://rheaimpact.com">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Rhea Impact">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Rhea Impact — Humanoid Robots for Those Who Need Them Most">
+    <meta name="twitter:description" content="Placing humanoid robots in homes of single parents, seniors, and people with limited mobility in DFW.">
+    <meta name="twitter:image" content="https://rheaimpact.com/images/robot-living-room.jpg">
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Inter:wght@400;500;600&display=swap" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
     <style>
@@ -692,7 +708,7 @@
                 <p class="fade-in">For a 78-year-old widow with arthritis, these tasks aren't mundane. They're barriers. For a single mother working two jobs, they're hours she doesn't have. For a veteran adjusting to life with limited mobility, they're daily reminders of what's been lost.</p>
 
                 <div class="section-image fade-in">
-                    <img src="images/seniors-kitchen.jpg" alt="Elderly hands preparing food at a kitchen counter" class="inline-image">
+                    <img src="images/seniors-kitchen.jpg" alt="Elderly hands preparing food at a kitchen counter" class="inline-image" width="1200" height="654" loading="lazy">
                 </div>
 
                 <p class="fade-in">This is the gap Rhea Impact was created to close.</p>
@@ -712,7 +728,7 @@
 
             <div class="media-break fade-in">
                 <div class="media-break-inner">
-                    <img src="images/robot-living-room.jpg" alt="1X Neo humanoid robot organizing items in a cozy living room" class="media-image">
+                    <img src="images/robot-living-room.jpg" alt="1X Neo humanoid robot organizing items in a cozy living room" class="media-image" width="1200" height="654" loading="lazy">
                     <p class="media-caption">The 1X Neo is a humanoid robot designed for household tasks—cleaning, organizing, and daily assistance. Standing roughly human-height, it can navigate homes, manipulate objects, and learn routines.</p>
                 </div>
             </div>
@@ -727,21 +743,21 @@
                 <p class="fade-in">Adults who want to stay in their homes but struggle with physical maintenance. A robot that handles cleaning and organization can extend independence by years—and delay or prevent the move to assisted living that many dread.</p>
 
                 <div class="section-image fade-in">
-                    <img src="images/robot-seniors.jpg" alt="Humanoid robot folding towels while a senior woman watches from her couch" class="inline-image">
+                    <img src="images/robot-seniors.jpg" alt="Humanoid robot folding towels while a senior woman watches from her couch" class="inline-image" width="1200" height="654" loading="lazy">
                 </div>
 
                 <h3 class="fade-in">Single parents</h3>
                 <p class="fade-in">Time is the scarcest resource. A parent working multiple jobs doesn't need another app or service—they need physical help with the house so they can spend their limited hours with their kids, not their dishes.</p>
 
                 <div class="section-image fade-in">
-                    <img src="images/robot-single-parent.jpg" alt="Mother playing with her young child on the floor while a humanoid robot vacuums in the background" class="inline-image">
+                    <img src="images/robot-single-parent.jpg" alt="Mother playing with her young child on the floor while a humanoid robot vacuums in the background" class="inline-image" width="1200" height="654" loading="lazy">
                 </div>
 
                 <h3 class="fade-in">People with mobility limitations</h3>
                 <p class="fade-in">Veterans, accident survivors, people with chronic conditions. Those for whom the physical world has become harder to navigate. A robot that handles household tasks isn't a luxury—it's a restoration of capability.</p>
 
                 <div class="section-image fade-in">
-                    <img src="images/robot-mobility.jpg" alt="Veteran in a wheelchair at home with a humanoid robot assistant nearby" class="inline-image">
+                    <img src="images/robot-mobility.jpg" alt="Veteran in a wheelchair at home with a humanoid robot assistant nearby" class="inline-image" width="1200" height="654" loading="lazy">
                 </div>
 
             </div>
@@ -801,7 +817,7 @@
                     <p>First deployments expected in 3-6 months. We're building the volunteer cohort now.</p>
                 </div>
 
-                <form class="the-ask-form" id="signup-form">
+                <form class="the-ask-form" id="signup-form" action="https://formspree.io/f/xwpkgqjp" method="POST">
                     <div class="form-header">
                         <h3>Express interest</h3>
                         <p>We'll be in touch when we're ready to onboard.</p>
@@ -822,7 +838,10 @@
                         <label for="why">Why are you interested?</label>
                         <textarea id="why" name="why" placeholder="A sentence or two is fine"></textarea>
                     </div>
+                    <input type="hidden" name="_subject" value="New Rhea Impact Volunteer Interest">
                     <button type="submit" class="form-submit">Submit</button>
+                    <p class="form-success" style="display:none; margin-top:1rem; color:#059669; font-family:var(--sans); font-size:0.9rem;">Thank you! We'll be in touch.</p>
+                    <p class="form-error" style="display:none; margin-top:1rem; color:#dc2626; font-family:var(--sans); font-size:0.9rem;">Something went wrong. Please try again.</p>
                 </form>
             </div>
         </section>
@@ -842,19 +861,44 @@
     </footer>
 
     <script>
-        // Form handling
-        document.getElementById('signup-form').addEventListener('submit', function(e) {
+        // Form handling with Formspree
+        const form = document.getElementById('signup-form');
+        const btn = form.querySelector('.form-submit');
+        const successMsg = form.querySelector('.form-success');
+        const errorMsg = form.querySelector('.form-error');
+
+        form.addEventListener('submit', async function(e) {
             e.preventDefault();
-            const btn = this.querySelector('.form-submit');
-            btn.textContent = 'Thank you';
-            btn.style.background = '#059669';
-            btn.style.color = '#fff';
-            setTimeout(() => {
+            btn.disabled = true;
+            btn.textContent = 'Sending...';
+            successMsg.style.display = 'none';
+            errorMsg.style.display = 'none';
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    btn.textContent = 'Sent!';
+                    btn.style.background = '#059669';
+                    successMsg.style.display = 'block';
+                    form.reset();
+                    setTimeout(() => {
+                        btn.textContent = 'Submit';
+                        btn.style.background = '';
+                        btn.disabled = false;
+                    }, 3000);
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            } catch (err) {
                 btn.textContent = 'Submit';
-                btn.style.background = '';
-                btn.style.color = '';
-                this.reset();
-            }, 3000);
+                btn.disabled = false;
+                errorMsg.style.display = 'block';
+            }
         });
 
         // Scroll reveal
