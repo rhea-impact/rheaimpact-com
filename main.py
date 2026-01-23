@@ -53,12 +53,15 @@ def check_rate_limit(ip: str) -> bool:
 def get_db():
     """Database connection context manager."""
     if not DATABASE_URL:
-        raise HTTPException(status_code=500, detail="Database not configured")
+        raise HTTPException(status_code=500, detail="Database not configured - env var missing")
     try:
         conn = psycopg.connect(DATABASE_URL)
     except Exception as e:
-        print(f"Database connection error: {e}")
-        raise HTTPException(status_code=500, detail=f"Database connection failed: {e}")
+        import sys
+        print(f"Database connection error: {e}", file=sys.stderr)
+        # Mask password in connection string for error message
+        safe_url = DATABASE_URL.split('@')[1] if '@' in DATABASE_URL else 'unknown'
+        raise HTTPException(status_code=500, detail=f"Database connection failed to {safe_url}: {type(e).__name__}: {e}")
     try:
         yield conn
     finally:
@@ -100,63 +103,72 @@ class SignupResponse(BaseModel):
     message: str
 
 
-@app.post("/signup", response_model=SignupResponse)
+@app.post("/signup")
 async def signup(request: SignupRequest, req: Request):
     """Add a volunteer to the mailing list."""
-    # Get client IP
-    client_ip = req.headers.get("x-forwarded-for", req.client.host if req.client else "unknown")
-    if "," in client_ip:
-        client_ip = client_ip.split(",")[0].strip()
+    try:
+        # Get client IP
+        client_ip = req.headers.get("x-forwarded-for", req.client.host if req.client else "unknown")
+        if "," in client_ip:
+            client_ip = client_ip.split(",")[0].strip()
 
-    # Rate limiting
-    if not check_rate_limit(client_ip):
-        raise HTTPException(
-            status_code=429,
-            detail="Too many requests. Please try again later."
-        )
+        # Rate limiting
+        if not check_rate_limit(client_ip):
+            raise HTTPException(
+                status_code=429,
+                detail="Too many requests. Please try again later."
+            )
 
-    # Honeypot check - if 'website' field is filled, it's a bot
-    if request.website:
-        # Silently accept but don't store (fool the bot)
+        # Honeypot check - if 'website' field is filled, it's a bot
+        if request.website:
+            # Silently accept but don't store (fool the bot)
+            return SignupResponse(
+                status="ok",
+                message="You're on the list! We'll be in touch."
+            )
+
+        with get_db() as conn:
+            with conn.cursor() as cur:
+                # Check if email already exists
+                cur.execute(
+                    "SELECT id FROM rheaimpact.volunteers WHERE email = %s",
+                    (request.email,)
+                )
+                if cur.fetchone():
+                    return SignupResponse(
+                        status="ok",
+                        message="You're already on the list! We'll be in touch."
+                    )
+
+                # Insert new volunteer
+                cur.execute(
+                    """
+                    INSERT INTO rheaimpact.volunteers (name, email, location, reason, created_at, ip_hash)
+                    VALUES (%s, %s, %s, %s, %s, %s)
+                    """,
+                    (
+                        request.name,
+                        request.email,
+                        request.location,
+                        request.why,
+                        datetime.utcnow(),
+                        hashlib.sha256(client_ip.encode()).hexdigest()[:16]  # Store hashed IP for abuse tracking
+                    )
+                )
+                conn.commit()
+
         return SignupResponse(
             status="ok",
             message="You're on the list! We'll be in touch."
         )
-
-    with get_db() as conn:
-        with conn.cursor() as cur:
-            # Check if email already exists
-            cur.execute(
-                "SELECT id FROM rheaimpact.volunteers WHERE email = %s",
-                (request.email,)
-            )
-            if cur.fetchone():
-                return SignupResponse(
-                    status="ok",
-                    message="You're already on the list! We'll be in touch."
-                )
-
-            # Insert new volunteer
-            cur.execute(
-                """
-                INSERT INTO rheaimpact.volunteers (name, email, location, reason, created_at, ip_hash)
-                VALUES (%s, %s, %s, %s, %s, %s)
-                """,
-                (
-                    request.name,
-                    request.email,
-                    request.location,
-                    request.why,
-                    datetime.utcnow(),
-                    hashlib.sha256(client_ip.encode()).hexdigest()[:16]  # Store hashed IP for abuse tracking
-                )
-            )
-            conn.commit()
-
-    return SignupResponse(
-        status="ok",
-        message="You're on the list! We'll be in touch."
-    )
+    except HTTPException:
+        raise
+    except Exception as e:
+        import sys
+        import traceback
+        print(f"Signup error: {e}", file=sys.stderr)
+        traceback.print_exc(file=sys.stderr)
+        raise HTTPException(status_code=500, detail=f"Signup failed: {type(e).__name__}: {e}")
 
 
 @app.get("/health", response_class=PlainTextResponse)
