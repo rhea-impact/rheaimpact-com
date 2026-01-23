@@ -177,6 +177,88 @@ async def health():
     return "OK"
 
 
+@app.get("/admin/volunteers/7x9k2m")
+async def list_volunteers():
+    """Admin view of volunteer signups (obscure URL)."""
+    with get_db() as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT id, name, email, location, reason, status, created_at
+                FROM rheaimpact.volunteers
+                ORDER BY created_at DESC
+            """)
+            rows = cur.fetchall()
+            volunteers = [
+                {
+                    "id": r[0],
+                    "name": r[1],
+                    "email": r[2],
+                    "location": r[3],
+                    "reason": r[4],
+                    "status": r[5],
+                    "created_at": r[6].isoformat() if r[6] else None
+                }
+                for r in rows
+            ]
+
+    # Return simple HTML page
+    html = """<!DOCTYPE html>
+<html>
+<head>
+    <title>Rhea Impact - Volunteers</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 1200px; margin: 0 auto; padding: 2rem; background: #f9fafb; }
+        h1 { color: #111827; }
+        .count { color: #6b7280; margin-bottom: 2rem; }
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid #e5e7eb; }
+        th { background: #f3f4f6; font-weight: 600; color: #374151; }
+        tr:hover { background: #f9fafb; }
+        .reason { max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .status { padding: 2px 8px; border-radius: 4px; font-size: 12px; }
+        .status-pending { background: #fef3c7; color: #92400e; }
+    </style>
+</head>
+<body>
+    <h1>Volunteer Signups</h1>
+    <p class="count">""" + str(len(volunteers)) + """ volunteers</p>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Location</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th>Signed Up</th>
+            </tr>
+        </thead>
+        <tbody>"""
+
+    for v in volunteers:
+        status_class = f"status-{v['status']}" if v['status'] else ""
+        html += f"""
+            <tr>
+                <td>{v['id']}</td>
+                <td>{v['name']}</td>
+                <td>{v['email']}</td>
+                <td>{v['location'] or '-'}</td>
+                <td class="reason" title="{v['reason'] or ''}">{v['reason'] or '-'}</td>
+                <td><span class="status {status_class}">{v['status'] or '-'}</span></td>
+                <td>{v['created_at'][:10] if v['created_at'] else '-'}</td>
+            </tr>"""
+
+    html += """
+        </tbody>
+    </table>
+</body>
+</html>"""
+
+    from fastapi.responses import HTMLResponse
+    return HTMLResponse(content=html)
+
+
 # Serve static files
 app.mount("/images", StaticFiles(directory="images"), name="images")
 
