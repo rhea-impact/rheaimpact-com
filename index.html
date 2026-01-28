@@ -653,7 +653,100 @@
         }
 
         /* ============================================
-           SCROLL ANIMATIONS
+        /* ============================================
+           SOFTWARE SECTION
+           ============================================ */
+        .software-section {
+            padding: 5rem 2rem;
+            background: var(--gray-50);
+            margin-left: calc(-50vw + 50%);
+            margin-right: calc(-50vw + 50%);
+        }
+
+        .software-section .article-content {
+            max-width: var(--measure-wide);
+            margin: 0 auto;
+        }
+
+        .software-section h2 {
+            font-family: var(--serif);
+            font-size: 2rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .software-section > .article-content > p {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            color: var(--gray-600);
+        }
+
+        .software-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .software-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 2rem;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+        .software-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .software-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .software-icon img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .software-card h3 {
+            font-family: var(--sans);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--gray-900);
+        }
+
+        .software-card p {
+            font-family: var(--sans);
+            font-size: 0.9rem;
+            color: var(--gray-600);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .software-link {
+            font-family: var(--sans);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--accent);
+        }
+
+
+        SCROLL ANIMATIONS
            ============================================ */
         .fade-in {
             opacity: 0;
@@ -799,6 +892,37 @@
 
             </div>
         </div>
+
+                <!-- FREE SOFTWARE FOR CODING AGENTS -->
+        <section class="software-section fade-in">
+            <div class="article-content">
+                <h2 class="fade-in">Free Software for Coding Agents</h2>
+                
+                <p class="fade-in">Alongside our humanoid robot work, we release free, open-source software designed for AI coding agents. Our tools help developers work more efficiently with AI assistants like Claude.</p>
+
+                <div class="software-grid">
+                    <a href="https://github.com/rhea-impact/taskr" class="software-card fade-in" target="_blank">
+                        <div class="software-icon">
+                            <img src="images/taskr-logo.png" alt="Taskr" onerror="this.style.display='none'">
+                        </div>
+                        <h3>Taskr</h3>
+                        <p>AI-native task management for Claude Code and MCP-compatible agents. Automates project planning with GitHub integration.</p>
+                        <span class="software-link">View on GitHub →</span>
+                    </a>
+
+                    <a href="https://github.com/rhea-impact/space-hog" class="software-card fade-in" target="_blank">
+                        <div class="software-icon">
+                            <img src="images/spacehog-logo.png" alt="Space Hog" onerror="this.style.display='none'">
+                        </div>
+                        <h3>Space Hog</h3>
+                        <p>CLI tool for finding and reclaiming wasted disk space on macOS. Prioritized cleanup advice, Docker analysis, AI-friendly recommendations.</p>
+                        <span class="software-link">View on GitHub →</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+
 
         <!-- THE ASK -->
         <section class="the-ask" id="volunteer">
