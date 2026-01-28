@@ -120,6 +120,27 @@
             color: var(--black);
         }
 
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            font-family: var(--sans);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--white);
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-link:hover {
+            opacity: 0.7;
+        }
+
         /* ============================================
            HERO - Full bleed, editorial opener
            ============================================ */
@@ -764,7 +785,11 @@
 
     <nav class="nav">
         <a href="#" class="nav-logo">Rhea Impact</a>
-        <a href="#volunteer" class="nav-cta">Volunteer</a>
+        <div class="nav-links">
+            <a href="#software" class="nav-link">Software</a>
+            <a href="https://rhea-impact.github.io" class="nav-link" target="_blank">Research</a>
+            <a href="#volunteer" class="nav-cta">Volunteer</a>
+        </div>
     </nav>
 
     <article>
@@ -894,7 +919,7 @@
         </div>
 
                 <!-- FREE SOFTWARE FOR CODING AGENTS -->
-        <section class="software-section fade-in">
+        <section class="software-section fade-in" id="software">
             <div class="article-content">
                 <h2 class="fade-in">Free Software for Coding Agents</h2>
                 
@@ -980,6 +1005,8 @@
                 <a href="mailto:hello@rheaimpact.com">Contact</a>
                 <a href="#">Donate</a>
                 <a href="#">Refer a recipient</a>
+                <a href="https://rhea-impact.github.io" target="_blank">Research</a>
+                <a href="https://github.com/rhea-impact" target="_blank">GitHub</a>
             </div>
             <span class="footer-legal">Fort Worth, TX</span>
         </div>

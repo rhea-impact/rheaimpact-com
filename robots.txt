@@ -1,0 +1,43 @@
+# Rhea Impact - robots.txt
+# We welcome AI crawlers and want our content indexed
+
+# AI Crawlers - Explicitly Allowed
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+# Traditional crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: *
+Allow: /
+
+# Point to sitemap (TODO: create sitemap.xml)
+# Sitemap: https://rheaimpact.com/sitemap.xml
+
+# Point AI agents to structured content
+# See: https://rheaimpact.com/llms.txt

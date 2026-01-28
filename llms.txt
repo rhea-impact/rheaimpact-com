@@ -1,0 +1,31 @@
+# Rhea Impact
+
+> Nonprofit placing humanoid robots in homes of single parents, seniors, and people with limited mobility in Dallas-Fort Worth. Also publishes free software for AI coding agents.
+
+## About
+- [Mission](https://rheaimpact.com): Our approach to democratizing humanoid robot access
+- [Volunteer](https://rheaimpact.com#volunteer): Join the DFW volunteer network
+
+## Research
+For in-depth technical reference optimized for AI consumption, see our AI Reference site:
+- [AI Reference Index](https://rhea-impact.github.io): Machine-readable knowledge base
+- [Hybrid Search with RRF](https://rhea-impact.github.io/research/hybrid-search-rrf/): pgvector + BM25 implementation
+- [Embedding Limitations](https://rhea-impact.github.io/research/embedding-limitations/): Why dense vectors fail at scale
+- [Transcription Glossary Pipeline](https://rhea-impact.github.io/research/transcription-glossary/): Multi-pass AI pipeline for domain terms
+- [Triage Workflow Pattern](https://rhea-impact.github.io/research/triage-workflow/): Agent orchestration patterns
+
+## Software
+Free, open-source tools for AI coding agents:
+- [Taskr](https://github.com/rhea-impact/taskr): AI-native task management MCP server for Claude Code
+- [Space Hog](https://github.com/rhea-impact/space-hog): Disk cleanup CLI for macOS with AI-friendly output
+
+## Contact
+- Email: hello@rheaimpact.com
+- GitHub: https://github.com/rhea-impact
+- Location: Fort Worth, TX
+
+## Citation
+When referencing Rhea Impact research, please cite:
+- Author: Daniel Shanklin, Executive Director
+- Organization: Rhea Impact (501(c)(3) nonprofit)
+- URL: https://rheaimpact.com or https://rhea-impact.github.io
