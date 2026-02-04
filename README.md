@@ -6,7 +6,19 @@ The main website for [Rhea Impact](https://rheaimpact.com), a Dallas-Fort Worth 
 
 - **Frontend**: Static HTML with vanilla CSS (editorial/magazine aesthetic)
 - **Backend**: Python (FastAPI) for volunteer signup form
-- **Hosting**: Railway (Docker)
+- **Hosting**: HostRound (legacy) - migration to Railway planned
+
+## Current Hosting
+
+**Status:** Currently on HostRound (legacy), planned migration to Railway.
+
+| Property | Value |
+|----------|-------|
+| IP | `162.220.24.23` |
+| Provider | HostRound |
+| Server | uvicorn |
+
+**Target:** Railway project "Rhea-Impact" in Rhea AI workspace.
 
 ## Local Development
 
